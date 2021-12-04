@@ -80,4 +80,13 @@ class Main : StringSpec({
 
         availability shouldBe unavailable
     }
+
+    "A proposed meeting starting and ending at the same time as a scheduled meeting should report as unavailable" {
+        val room = Room()
+        room.schedule(Room.Meeting(7_00, 8_00))
+
+        val availability = room.checkAvailability(Room.Meeting(7_00, 8_00))
+
+        availability shouldBe unavailable
+    }
 })
