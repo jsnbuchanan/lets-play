@@ -62,4 +62,22 @@ class Main : StringSpec({
 
         availability shouldBe unavailable
     }
+
+    "A proposed Meeting that starts at the same time and ends after a scheduled meeting should report as unavailable" {
+        val room = Room()
+        room.schedule(Room.Meeting(7_00, 8_00))
+
+        val availability = room.checkAvailability(Room.Meeting(7_00, 9_00))
+
+        availability shouldBe unavailable
+    }
+
+    "A proposed Meeting that starts before and ends at the same time as a scheduled meeting should report as unavailable" {
+        val room = Room()
+        room.schedule(Room.Meeting(7_00, 8_00))
+
+        val availability = room.checkAvailability(Room.Meeting(6_00, 8_00))
+
+        availability shouldBe unavailable
+    }
 })
