@@ -72,5 +72,9 @@ class Room {
                 || (proposed.start <= scheduled.start && proposed.end >= scheduled.end )
     }
 
-    data class Meeting(val start: Long, val end: Long)
+    data class Meeting(val start: Long, val end: Long) {
+        override fun toString(): String {
+            return "Meeting from ${start} to $end"
+        }
+    }
 }
