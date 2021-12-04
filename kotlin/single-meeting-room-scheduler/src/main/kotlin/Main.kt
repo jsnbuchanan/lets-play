@@ -52,6 +52,7 @@ class Room {
     private fun conflictWith(proposed: Meeting) = { scheduled: Meeting ->
         (proposed.start >= scheduled.start && proposed.start < scheduled.end)
                 || (proposed.end < scheduled.end && proposed.end > scheduled.start)
+                || (proposed.start <= scheduled.start && proposed.end >= scheduled.end )
     }
 
     data class Meeting(val start: Long, val end: Long)
