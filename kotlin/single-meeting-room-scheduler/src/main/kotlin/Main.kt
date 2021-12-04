@@ -1,3 +1,8 @@
+import Response.Availability.Available
+import Response.Availability.Unavailable
+import Response.Scheduled.FailedToSchedule
+import Response.Scheduled.Success
+
 /**
  * For more examples, please see
  * src/test/kotlin/MainTest.kt
@@ -13,11 +18,16 @@ fun main() {
     println(availability.status)
 }
 
-sealed class Availability {
+sealed class Response {
     abstract val status: String
-
-    data class Available(override val status: String = "available") : Availability()
-    data class Unavailable(override val status: String = "unavailable") : Availability()
+    sealed class Availability : Response() {
+        data class Available(override val status: String = "available") : Availability()
+        data class Unavailable(override val status: String = "unavailable") : Availability()
+    }
+    sealed class Scheduled : Response() {
+        data class Success(override val status: String = "scheduled successfully!") : Scheduled()
+        data class FailedToSchedule(override val status: String) : Scheduled()
+    }
 }
 
 class Room {
@@ -40,14 +50,21 @@ class Room {
      * @return
      */
     fun checkAvailability(proposed: Meeting) = when {
-        meetings.any(conflictWith(proposed)) -> Availability.Unavailable()
-        else -> Availability.Available()
+        isNotAvailable(proposed) -> Unavailable()
+        else -> Available()
     }
 
-
-    fun schedule(meeting: Meeting) : Boolean {
-        return meetings.add(meeting)
+    fun schedule(newMeeting: Meeting) = when {
+        isAvailable(newMeeting) -> when {
+            meetings.add(newMeeting) -> Success()
+            else -> FailedToSchedule("Was available to schedule, but failed for some other reason.")
+        }
+        else -> FailedToSchedule("Meeting time is no longer available.")
     }
+
+    private fun isAvailable(proposed: Meeting) = !isNotAvailable(proposed)
+
+    private fun isNotAvailable(proposed: Meeting) = meetings.any(conflictWith(proposed))
 
     private fun conflictWith(proposed: Meeting) = { scheduled: Meeting ->
         (proposed.start >= scheduled.start && proposed.start < scheduled.end)

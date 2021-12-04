@@ -1,5 +1,5 @@
-import Availability.Available
-import Availability.Unavailable
+import Response.Availability.Available
+import Response.Availability.Unavailable
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
