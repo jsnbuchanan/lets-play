@@ -4,8 +4,10 @@ fun main() {
 }
 
 sealed class Availability {
-    data class Available(val message: String = "available") : Availability()
-    data class Unavailable(val message: String = "unavailable") : Availability()
+    abstract val status: String
+
+    data class Available(override val status: String = "available") : Availability()
+    data class Unavailable(override val status: String = "unavailable") : Availability()
 }
 
 class Room {
