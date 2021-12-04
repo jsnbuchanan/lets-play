@@ -1,6 +1,16 @@
-
+/**
+ * For more examples, please see
+ * src/test/kotlin/MainTest.kt
+ */
 fun main() {
+    // Example:
+    val room = Room()
+    room.schedule(Room.Meeting(7_00, 8_00))
 
+    val availability = room.checkAvailability(Room.Meeting(7_30, 8_30))
+
+    // Prints "unavailable"
+    println(availability.status)
 }
 
 sealed class Availability {
