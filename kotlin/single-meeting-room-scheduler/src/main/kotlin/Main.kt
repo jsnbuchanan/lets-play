@@ -12,10 +12,22 @@ fun main() {
     val room = Room()
     room.schedule(Room.Meeting(7_00, 8_00))
 
-    val availability = room.checkAvailability(Room.Meeting(7_30, 8_30))
+    val conflictingMeeting = Room.Meeting(7_30, 8_30)
+    val unavailable = room.checkAvailability(conflictingMeeting)
 
-    // Prints "unavailable"
-    println(availability.status)
+    // Prints "Meeting from 730 to 830 is unavailable."
+    println("$conflictingMeeting is ${unavailable.status}.")
+
+    val nonConflictingMeeting = Room.Meeting(8_00, 8_30)
+    val available = room.checkAvailability(nonConflictingMeeting)
+
+    // Prints "Meeting from 800 to 830 is available."
+    println("$nonConflictingMeeting is ${available.status}.")
+
+    val result = room.schedule(nonConflictingMeeting)
+
+    // Prints "scheduled successfully!"
+    println(result.status)
 }
 
 sealed class Response {
@@ -33,22 +45,6 @@ sealed class Response {
 class Room {
     private val meetings = mutableListOf<Meeting>()
 
-    /**
-     * Check availability
-     *
-     * scenarios A:
-     *
-     * proposed 8 -> 9am
-     *
-     * 8 -> 9 am
-     * 10 -> 11 am
-     * 12 -> 1 pm
-     *
-     * should return false
-     *
-     * @param proposed
-     * @return
-     */
     fun checkAvailability(proposed: Meeting) = when {
         isNotAvailable(proposed) -> Unavailable()
         else -> Available()
