@@ -27,15 +27,12 @@ class Building {
     this._topFloor = floorCount;
     this._firstBreak = Math.floor(Math.random() * floorCount)+1;
     this._floors = new Array(floorCount);
+    this._survived = (floorIndex) => this._floors[floorIndex] === this._UNBROKEN;
 
     // Populate floor drop results
     for (let floor = 0; floor < floorCount; floor++) {
       this._floors[floor] = floor+1 < this._firstBreak ? this._UNBROKEN : this._BROKEN;
     }
-  }
-
-  _survived(floorIndex) {
-    return this._floors[floorIndex] === this._UNBROKEN;
   }
 
   /**
@@ -45,9 +42,18 @@ class Building {
    * @returns {boolean} true if the egg had survived being dropped from this floor
    */
   survivedDrop(floor) {
-    if (floor < 1) throw new Error("What are you? A gopher? This building has no basement. You attempted to go below floor one.");
-    if (floor > this._topFloor) throw new Error("I know your mother thinks you're an angel, but you cannot reach a higher floor without wings. You attempted to go beyond the top floor.");
+    if (floor < 1) throw new Error("You attempted to access a floor below street level. This building has no basement. Or does it... cue spooky music.");
+    if (floor > this._topFloor) throw new Error("You attempted to ascend past the top floor. I know your mother thinks you're an angel, but try again Icarus.");
     return this._survived(floor - 1);
+  }
+
+  /**
+   * Responds with the floor that the egg will break.
+   *
+   * @returns {string} the first floor at which the egg will break.
+   */
+  cheat() {
+    return this._firstBreak;
   }
 
   /**
@@ -57,7 +63,11 @@ class Building {
    * @returns {string} an ascii cheat sheet of where the egg will break.
    */
   cheatSheet() {
-    return this.toString() + `  Egg will break at floor ${this._firstBreak}!`;
+    let cheatSheet = '\n';
+    cheatSheet += 'CHEAT SHEET:\n';
+    cheatSheet += this.toString();
+    cheatSheet += `   Egg will break at floor ${this.cheat()}!\n`;
+    return cheatSheet;
   }
 
   /**
@@ -70,7 +80,7 @@ class Building {
     const roofAscii =     '  .--------------------------.\n';
     const midFloorAscii = '  |--------------------------|\n';
     const floorOneAscii =  '  |    [] []  |||  [] []     |\n';
-    const streetAscii =   "--'-----------'-'------------'--\n";
+    const streetAscii =   "--'-----------'''------------'--\n";
     const stepsAscii  =   "================================\n";
     const survived = " ".repeat(splatAscii.length);
     const formatFloorNumber = (floorNumber) => (floorNumber).toString().padEnd(4);
