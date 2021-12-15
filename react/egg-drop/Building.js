@@ -63,9 +63,10 @@ class Building {
    * @returns {string} an ascii cheat sheet of where the egg will break.
    */
   cheatSheet() {
+    const DISPLAY_BROKEN = true;
     let cheatSheet = '\n';
     cheatSheet += 'CHEAT SHEET:\n';
-    cheatSheet += this.toString();
+    cheatSheet += this.toString(DISPLAY_BROKEN);
     cheatSheet += `   Egg will break at floor ${this.cheat()}!\n`;
     return cheatSheet;
   }
@@ -75,13 +76,15 @@ class Building {
    *
    * @returns {string} an ascii representation of the building
    */
-  toString() {
-    const splatAscii = "#+_ splat _+#";
-    const roofAscii =     '  .--------------------------.\n';
-    const midFloorAscii = '  |--------------------------|\n';
-    const floorOneAscii =  '  |    [] []  |||  [] []     |\n';
-    const streetAscii =   "--'-----------'''------------'--\n";
-    const stepsAscii  =   "================================\n";
+  toString(displayBroken = false) {
+    const splatAscii = displayBroken ? ' ೃ*.˚broken˚.*ೃ ' : '                ';
+    const roofAscii     = '  .-----------------------------.\n';
+    const midFloorAscii = '  |-----------------------------|\n';
+    let floorOneAscii    = '  |                             |\n';
+        floorOneAscii   += '  |    []  []   .-.   []  []    |\n';
+        floorOneAscii   += '  |    []  []   |||   []  []    |\n';
+    const streetAscii   = "--'-------------'''-------------'--\n";
+    const stepsAscii    = '===================================\n';
     const survived = " ".repeat(splatAscii.length);
     const formatFloorNumber = (floorNumber) => (floorNumber).toString().padEnd(4);
     const getFloorAscii = (floorNumber, result) => `  | floor ${formatFloorNumber(floorNumber)} ${result} |  \n`;
