@@ -24,6 +24,7 @@ class Building {
     this._UNBROKEN = 0;
     this._BROKEN = 1;
 
+    this._dropAttempts = 0;
     this._topFloor = floorCount;
     this._firstBreak = Math.floor(Math.random() * floorCount)+1;
     this._floors = new Array(floorCount);
@@ -42,9 +43,18 @@ class Building {
    * @returns {boolean} true if the egg had survived being dropped from this floor
    */
   survivedDrop(floor) {
+    this._dropAttempts++
     if (floor < 1) throw new Error("You attempted to access a floor below street level. This building has no basement. Or does it... cue spooky music.");
     if (floor > this._topFloor) throw new Error("You attempted to ascend past the top floor. I know your mother thinks you're an angel, but try again Icarus.");
     return this._survived(floor - 1);
+  }
+
+  /**
+   * Returns the number of times {this.survivedDrop(floor)} is called
+   * @returns {number} of drop attempts
+   */
+  getAttemptCount() {
+    return this._dropAttempts;
   }
 
   /**
