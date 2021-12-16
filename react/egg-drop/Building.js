@@ -37,6 +37,13 @@ class Building {
   }
 
   /**
+   * @returns {number} the number of floors in this building
+   */
+  getFloorCount() {
+    return this._topFloor;
+  }
+
+  /**
    * Checks to see if an egg would survive when dropped from this floor.
    *
    * @param floor number to check for drop results
