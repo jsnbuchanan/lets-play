@@ -16,11 +16,81 @@ Create an algorithm that will discover the lowest drop that will break the egg i
 
 ---
 ## API
+
+### EggCache Class
+
+- [EggCache.of(eggCount)](`EggCache.of(n)`)
+- [eggCache.get()](`eggCache.get()`)
+- [Iterating over an EggCache](`Iterating over an EggCache`)
+
+### Egg Class
+- [egg.break()](`egg.break()`)
+- [egg.isBroken()](`egg.isBroken()`)
+- [egg.isNotBroken()](`egg.isNotBroken()`)
+
+### Building Class
 - [Building.with(floorCount) & building.toString()](`Building.with(floorCount)`)
+- [building.getFloorCount()](`building.getFloorCount()`)
 - [building.survivedDrop(floorNumber)](`building.survivedDrop(floorNumber)`)
 - [building.cheat()](`building.cheat()`)
 - [building.cheatSheet()](`building.cheatSheet()`)
+
+---
+
 ## Example API usage
+
+### EggCache Class
+
+### `EggCache.of(n)`
+Returns a cache of `n` unbroken eggs.
+```javascript
+const EggCache = require("./EggCache");
+const eggs = EggCache.of(2);
+```
+
+---
+
+### `eggCache.get()`
+Retrieves the next unbroken egg in the cache. 
+If all eggs have been broken will throw an Error indicating so.
+
+```javascript
+const EggCache = require("./EggCache");
+const egg = EggCache.of(2).get();
+```
+
+---
+
+### Iterating over an EggCache object
+The EggCache object is iterable for your convenience.
+```javascript
+const EggCache = require("./EggCache");
+
+const eggs = EggCache.of(2);
+
+for (const egg of eggs) {
+  console.log(egg);
+}
+```
+
+---
+### Egg Class
+### `egg.break()`
+Marks the egg as broken.
+
+---
+
+### `egg.isBroken()`
+Returns true if the egg is broken.
+
+---
+
+### `egg.isNotBroken()`
+Returns true if the egg is NOT broken.
+
+---
+### Building Class
+
 ### `Building.with(floorCount)`
 Create a building object with 3 floors:
 ```javascript
@@ -42,6 +112,13 @@ displays:
 --'-------------'''-------------'--
 ===================================
 </pre>
+
+---
+
+### `building.getFloorCount()`
+
+Returns the total number of floors for this building.
+
 ---
 
 ### `building.survivedDrop(floorNumber)`

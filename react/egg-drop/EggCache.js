@@ -18,7 +18,7 @@ class Egg {
 }
 
 class EggCache {
-  static get(eggCount = 2) {
+  static of(eggCount = 2) {
     return new EggCache(eggCount);
   }
 
@@ -27,6 +27,15 @@ class EggCache {
     for (let i = 0; i < eggCount; i++) {
       this._eggs[i] = new Egg();
     }
+  }
+
+  get() {
+    for (const egg of this._eggs) {
+      if (egg.isNotBroken()) {
+        return egg;
+      }
+    }
+    throw Error("All eggs are broken.");
   }
 
   *[Symbol.iterator]() {
