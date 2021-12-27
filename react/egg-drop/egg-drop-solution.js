@@ -1,5 +1,6 @@
 const EggCache = require("./EggCache");
 const Building = require("./Building");
+const Log = require("./Log");
 
 /**
  * Credit for this test goes to David Cross and Scott Hawker (https://twitter.com/yarell)
@@ -53,34 +54,45 @@ const getLowestBreakingFloor = (eggs, building) => {
   return -1;
 };
 
-const successBot = (attempts) => {
-  if (attempts > 49) {
-    return `, but you dropped ${attempts} times or more, how might you improve this algorithm? `;
-  } else if (attempts > 29) {
-    return ` and you're warming up. Only ${attempts} attempts that time. Is there a way to cut that attempt count in half?`;
-  } else if (attempts > 20) {
-    return ` and you're getting closer. Only ${attempts} attempts that time. Does anyone on the team have ideas to help?`;
-  } else if (attempts > 14) {
-    return ` and you are getting pretty efficient. Only ${attempts} attempts. Is there anything else you can do?`;
+const successBot = (log) => {
+  const { fastest, average, slowest } = log;
+
+  const fastestAndAvg = `Fastest was ${fastest} attempts, with an average attempt count of ${average}.`;
+
+  if (slowest > 49) {
+    return `, but your max drop count to determine which floor was ${slowest} times or more, how might you improve this algorithm? ${fastestAndAvg}`;
+  } else if (slowest > 29) {
+    return ` and you're warming up. Max drop count was only ${slowest} attempts that time. Is there a way to cut that attempt count in half? ${fastestAndAvg}`;
+  } else if (slowest > 20) {
+    return ` and you're getting closer. Max drop count was only ${slowest} attempts that time. Does anyone on the team have ideas to help? ${fastestAndAvg}`;
+  } else if (slowest > 14) {
+    return ` and you are getting pretty efficient. Max drops was only ${slowest} attempts. Is there anything else you can do? ${fastestAndAvg}`;
   }
-  return `. Good work. the Team really nailed it! And only ${attempts} attempts.`;
+  return `. Good work. the Team really nailed it! And max drops was only ${slowest} attempts. ${fastestAndAvg}`;
 }
 
 (function() {
-  const building = Building.with(100);
-  const eggs = EggCache.of(2);
+  const repetitions = 1000;
+  const buildingHeightInFloors = 100;
+  const log = new Log(buildingHeightInFloors, repetitions);
 
-  const correctAnswer = building.cheat();
-  const answer = getLowestBreakingFloor(eggs, building);
+  for (let rep = 0; rep < repetitions; rep++) {
 
-  console.log(building.cheatSheet());
+    const building = Building.with(buildingHeightInFloors);
+    const eggs = EggCache.of(2);
 
-  if (correctAnswer === answer) {
-    console.log(`Test passes${successBot(building.getAttemptCount())}`);
-    console.log(`The egg breaks first on floor number ${answer}.`);
-  } else {
-    console.log('Test Failed!');
-    console.log('expected:', correctAnswer);
-    console.log('actual:', answer);
+    const answer = getLowestBreakingFloor(eggs, building);
+
+    const correctAnswer = building.cheat();
+    if (correctAnswer !== answer) {
+      console.log(`Test Failed on repetition ${rep}!`);
+      console.log('expected floor #', correctAnswer);
+      console.log('actual answer ', answer);
+      return;
+    }
+    log.add(building.getAttemptCount());
+
+    // console.log(building.cheatSheet());
   }
+  console.log(`Test passes${successBot(log)}`);
 })();
