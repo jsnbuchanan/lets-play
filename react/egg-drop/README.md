@@ -30,7 +30,7 @@ Create an algorithm that will discover the lowest drop that will break the egg i
 ### Building Class
 - [Building.with(floorCount) & building.toString()](`Building.with(floorCount)`)
 - [building.getFloorCount()](`building.getFloorCount()`)
-- [building.survivedDrop(egg, floorNumber)](`building.survivedDrop(egg, floorNumber)`)
+- [building.drop(egg, fromFloorNumber)](`building.drop(egg, fromFloorNumber)`)
 - [building.cheat()](`building.cheat()`)
 - [building.cheatSheet()](`building.cheatSheet()`)
 
@@ -107,7 +107,7 @@ Returns the total number of floors for this building.
 
 ---
 
-### `building.survivedDrop(egg, floorNumber)`
+### `building.drop(egg, fromFloorNumber)`
 Given a floor number to check an egg drop from, this method responds in the following four ways:
 
 ```javascript
@@ -123,22 +123,24 @@ do {
 
     let demo = `\nGiven a ${floorCount} story building:`;
 
-    const firstBreakingFloor = building.cheat();
+    const fromFirstBreakingFloor = building.cheat();
     let egg = eggs.get();
-    if (!building.survivedDrop(egg, firstBreakingFloor)) {
-      demo += `\n\t✓ The egg breaks when dropped from floor ${firstBreakingFloor}.`;
+    building.drop(egg, fromFirstBreakingFloor)
+    if (egg.isBroken()) {
+      demo += `\n\t✓ The egg breaks when dropped from floor ${fromFirstBreakingFloor}.`;
     }
 
     egg = eggs.get();
-    const fromSafeFloor = firstBreakingFloor - 1;
-    if (building.survivedDrop(egg, fromSafeFloor)) {
+    const fromSafeFloor = fromFirstBreakingFloor - 1;
+    building.drop(egg, fromSafeFloor)
+    if (egg.isNotBroken()) {
       demo += `\n\t✓ The egg does NOT break when dropped from floor ${fromSafeFloor}.`;
     }
 
     const fromBasement = -1;
     try {
       egg = eggs.get();
-      building.survivedDrop(egg, fromBasement);
+      building.drop(egg, fromBasement);
     } catch (e) {
       demo += `\n\t✓ Dropping below street level will Error with:\n\t\t"${e.message}."`;
     }
@@ -146,7 +148,7 @@ do {
     const fromAboveBuilding = floorCount + 1;
     try {
       egg = eggs.get();
-      building.survivedDrop(egg, fromAboveBuilding);
+      building.drop(egg, fromAboveBuilding);
     } catch (e) {
       demo += `\n\t✓ Dropping above the top floor will Error with:\n\t\t"${e.message}."`;
     }
