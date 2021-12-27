@@ -46,14 +46,19 @@ class Building {
   /**
    * Checks to see if an egg would survive when dropped from this floor.
    *
-   * @param floor number to check for drop results
+   * @param egg to drop fromFloor number
+   * @param fromFloor number to check for drop results
    * @returns {boolean} true if the egg had survived being dropped from this floor
    */
-  survivedDrop(floor) {
+  drop(egg, fromFloor) {
     this._dropAttempts++
-    if (floor < 1) throw new Error("You attempted to access a floor below street level. This building has no basement. Or does it... cue spooky music.");
-    if (floor > this._topFloor) throw new Error("You attempted to ascend past the top floor. I know your mother thinks you're an angel, but try again Icarus.");
-    return this._survived(floor - 1);
+    if (fromFloor < 1) throw new Error("You attempted to access a floor below street level. This building has no basement. Or does it... cue spooky music.");
+    if (fromFloor > this._topFloor) throw new Error("You attempted to ascend past the top floor. I know your mother thinks you're an angel, but try again Icarus.");
+    const survivedDrop = this._survived(fromFloor - 1)
+    if (!survivedDrop) {
+      egg.break();
+    }
+    return survivedDrop;
   }
 
   /**

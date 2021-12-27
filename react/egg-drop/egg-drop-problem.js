@@ -37,7 +37,7 @@ const getLowestBreakingFloor = (eggs, building) => {
 };
 
 (function() {
-  const building = Building.with(5);
+  const building = Building.with(100);
   const eggs = EggCache.of(2);
 
   const correctAnswer = building.cheat();
