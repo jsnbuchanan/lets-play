@@ -21,7 +21,6 @@ Create an algorithm that will discover the lowest drop that will break the egg i
 
 - [EggCache.of(eggCount)](`EggCache.of(n)`)
 - [eggCache.get()](`eggCache.get()`)
-- [Iterating over an EggCache](`Iterating over an EggCache`)
 
 ### Egg Class
 - [egg.break()](`egg.break()`)
@@ -52,7 +51,7 @@ const eggs = EggCache.of(2);
 
 ### `eggCache.get()`
 Retrieves the next unbroken egg in the cache. 
-If all eggs have been broken will throw an Error indicating so.
+If all eggs have been broken will return undefined.
 
 ```javascript
 const EggCache = require("./EggCache");
@@ -61,19 +60,6 @@ const egg = EggCache.of(2).get();
 
 ---
 
-### Iterating over an EggCache object
-The EggCache object is iterable for your convenience.
-```javascript
-const EggCache = require("./EggCache");
-
-const eggs = EggCache.of(2);
-
-for (const egg of eggs) {
-  console.log(egg);
-}
-```
-
----
 ### Egg Class
 ### `egg.break()`
 Marks the egg as broken.

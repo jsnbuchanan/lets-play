@@ -29,19 +29,14 @@ class EggCache {
     }
   }
 
+  /**
+   * @returns {*} Retrieves the next unbroken egg in the cache. If all eggs have been broken will return undefined.
+   */
   get() {
-    for (const egg of this._eggs) {
+    while (this._eggs.length > 0) {
+      const egg = this._eggs.shift()
       if (egg.isNotBroken()) {
         return egg;
-      }
-    }
-    throw Error("All eggs are broken.");
-  }
-
-  *[Symbol.iterator]() {
-    for(const egg of this._eggs) {
-      if (egg.isNotBroken()) {
-        yield egg;
       }
     }
   }
