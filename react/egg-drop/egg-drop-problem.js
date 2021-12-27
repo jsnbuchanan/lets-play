@@ -36,6 +36,19 @@ const getLowestBreakingFloor = (eggs, building) => {
   return -1;
 };
 
+const successBot = (attempts) => {
+  if (attempts > 49) {
+    return `, but you dropped ${attempts} times or more, how might you improve this algorithm? `;
+  } else if (attempts > 29) {
+    return ` and you're warming up. Only ${attempts} attempts that time. Is there a way to cut that attempt count in half?`;
+  } else if (attempts > 20) {
+    return ` and you're getting closer. Only ${attempts} attempts that time. Does anyone on the team have ideas to help?`;
+  } else if (attempts > 14) {
+    return ` and you are getting pretty efficient. Only ${attempts} attempts. Is there anything else you can do?`;
+  }
+  return `. Good work. the Team really nailed it! And only ${attempts} attempts.`;
+}
+
 (function() {
   const building = Building.with(100);
   const eggs = EggCache.of(2);
@@ -55,15 +68,3 @@ const getLowestBreakingFloor = (eggs, building) => {
   }
 })();
 
-const successBot = (attempts) => {
-  if (attempts > 49) {
-    return `, but you dropped ${attempts} times or more, how might you improve this algorithm? `;
-  } else if (attempts > 29) {
-    return ` and you're warming up. Only ${attempts} attempts that time. Is there a way to cut that attempt count in half?`;
-  } else if (attempts > 20) {
-    return ` and you're getting closer. Only ${attempts} attempts that time. Does anyone on the team have ideas to help?`;
-  } else if (attempts > 14) {
-    return ` and you are getting pretty efficient. Only ${attempts} attempts. Is there anything else you can do?`;
-  }
-  return `. Good work. the Team really nailed it! And only ${attempts} attempts.`;
-}
