@@ -33,21 +33,25 @@ const Log = require("./Log");
  */
 const getLowestBreakingFloor = (eggs, building) => {
 
-  // found a great idea for this solution at khanacademy.org under the topic "Patterns in hundreds Chart"
+  // khanacademy.org inspired this solution under the topic "Patterns in hundreds Chart"
   // for what it's worth, this is in the 3rd grade math problem solving, lol
   // see https://www.khanacademy.org/math/cc-third-grade-math/arithmetic-patterns-and-problem-solving/imp-patterns-in-arithmetic/v/patterns-in-hundreds-chart
+
   const floors = building.getFloorCount();
-  let egg = eggs.get();
-  for (let start = 1, nextStart = start + 9; start < floors; start += 9, nextStart += 9) {
-    for (let fromFloor = start; fromFloor < nextStart; fromFloor++) {
-      console.log(`dropped from floor #${fromFloor}`);
-      egg = egg.isBroken() ? eggs.get() : egg;
-      if(!building.survivedDrop(egg, fromFloor)) {
-        console.log('##### BROKE #####');
-        return fromFloor;
-      } else {
-        console.log('\t and survived');
+  const firstEgg = eggs.get();
+  const secondEgg = eggs.get();
+  for (let start = 1, step = 13; start <= floors; start += 1 + (step > 2 ? step-- : 2) ) {
+    const nextStep = start + step;
+    let topFloorThisRound = nextStep < floors ? nextStep : floors;
+    building.drop(firstEgg, topFloorThisRound);
+    if(firstEgg.isBroken()) {
+      for (let fromFloor = start; fromFloor < topFloorThisRound; fromFloor++) {
+        building.drop(secondEgg, fromFloor);
+        if(secondEgg.isBroken()) {
+          return fromFloor;
+        }
       }
+      return topFloorThisRound;
     }
   }
 
@@ -70,6 +74,7 @@ const successBot = (log) => {
   }
   return `. Good work. the Team really nailed it! And max drops was only ${slowest} attempts. ${fastestAndAvg}`;
 }
+
 
 (function() {
   const repetitions = 1000;
