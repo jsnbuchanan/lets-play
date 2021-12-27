@@ -50,7 +50,7 @@ class Building {
    * @param fromFloor number to check for drop results
    * @returns {boolean} true if the egg had survived being dropped from this floor
    */
-  drop(egg, fromFloor) {
+  survivedDrop(egg, fromFloor) {
     this._dropAttempts++
     if (fromFloor < 1) throw new Error("You attempted to access a floor below street level. This building has no basement. Or does it... cue spooky music.");
     if (fromFloor > this._topFloor) throw new Error("You attempted to ascend past the top floor. I know your mother thinks you're an angel, but try again Icarus.");
