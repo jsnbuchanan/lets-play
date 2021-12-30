@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 
-class Main : StringSpec({
+class AvailabilityTest : StringSpec({
 
     val available = Available()
     val unavailable = Unavailable()
