@@ -1,5 +1,4 @@
 import io.kotest.core.spec.style.StringSpec
-import kotlin.system.measureNanoTime
 import kotlin.system.measureTimeMillis
 
 class SpeedTest : StringSpec({
