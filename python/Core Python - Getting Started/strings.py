@@ -34,3 +34,29 @@ origin, _, destination = "Seattle>Boston".partition('>')
 print(origin, 'to', destination)
 # Seattle to Boston
 
+# str.format()
+print("The age of {0} is {1}.".format('Jim', 32))
+# The age of Jim is 32
+print("The age of {0} is {1}. {0}'s birthday is on {2}".format('Fred', 24, 'October 31st'))
+# The age of Fred is 24. Fred's birthday is on October 31st
+
+# Indexes can be excluded if each format variable is used only once
+print("Reticulating spline {} of {}.".format(4, 23))
+# Reticulating spline 4 of 23.
+
+# format with named fields
+print("Current position {latitude} {longitude}".format(latitude="60N", longitude="5E"))
+# Current position 60N 5E
+
+# format with tuple indexes
+print("Galactic position x={pos[0]}, y={pos[1]}, z={pos[2]}".format(pos=(65.2, 23.1, 82.2)))
+# Galactic position x=65.2, y=23.1, z=82.2
+
+# format with an object's attributes
+import math
+print("Math constants: pi={m.pi}, e={m.e}".format(m=math))
+# Math constants: pi=3.141592653589793, e=2.718281828459045
+
+# format control limiting decimal places
+print("Math constants: pi={m.pi:.3f}, e={m.e:.3f}".format(m=math))
+# Math constants: pi=3.142, e=2.718
