@@ -79,3 +79,9 @@ print(lower, upper)
 print(a, b, c, d)
 # 4 3 2 1
 
+# swapping variables with tuples
+a = 'jelly'
+b = 'bean'
+a, b = b, a
+print(a, b)
+# bean jelly
