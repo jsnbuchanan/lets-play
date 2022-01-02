@@ -74,3 +74,8 @@ lower, upper = minmax([83, 33, 84, 32, 85, 31, 86])
 print(lower, upper)
 # 31 86
 
+# nested unpacking
+(a, (b, (c, d))) = (4, (3, (2, 1)))
+print(a, b, c, d)
+# 4 3 2 1
+
