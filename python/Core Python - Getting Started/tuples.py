@@ -93,3 +93,10 @@ print(tuple([561, 1105, 1729, 2465]))
 # you can create a tuple with any interable object, for example a string
 print(tuple('Carmichael'))
 # ('C', 'a', 'r', 'm', 'i', 'c', 'h', 'a', 'e', 'l')
+
+# testing for membership of an object within a tuple
+print(5 in (3, 5, 17, 257, 65537))
+# True
+# and testing for object not found within a tuple using "not in" operator
+print(5 not in (3, 5, 17, 257, 65537))
+# False
