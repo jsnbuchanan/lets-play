@@ -60,3 +60,24 @@ print("Math constants: pi={m.pi}, e={m.e}".format(m=math))
 # format control limiting decimal places
 print("Math constants: pi={m.pi:.3f}, e={m.e:.3f}".format(m=math))
 # Math constants: pi=3.142, e=2.718
+
+# f-strings for literal string interpolation with expressions
+print(f"one plus one is {1 + 1}")
+# one plus one is 2
+
+# f-strings with named variables
+value = 4 * 20
+print(f'The value is {value}')
+# The value is 80
+
+# f-string expression evaluation
+import datetime
+print(f'The current time is {datetime.datetime.now().isoformat()}.')
+# The current time is 2022-01-02T13:00:06.340619.
+
+# f-strings with formatting
+print(f'Math constants: pi={math.pi:.3f}, e={math.e:.3f}')
+# Math constants: pi=3.142, e=2.718
+
+# investigate further string methods
+print(help('string'))
