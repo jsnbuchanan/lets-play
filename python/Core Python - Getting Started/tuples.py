@@ -85,3 +85,11 @@ b = 'bean'
 a, b = b, a
 print(a, b)
 # bean jelly
+
+# creating a tuple from a list with the tuple constructor
+print(tuple([561, 1105, 1729, 2465]))
+# (561, 1105, 1729, 2465)
+
+# you can create a tuple with any interable object, for example a string
+print(tuple('Carmichael'))
+# ('C', 'a', 'r', 'm', 'i', 'c', 'h', 'a', 'e', 'l')
